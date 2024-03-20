@@ -8,8 +8,10 @@ class Groove_It extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text(
-              'Find a Song',
+            title: Center(
+              child: Text(
+                'Find a Song',
+              ),
             ),
             leading: Icon(Icons.person),
             actions: [
