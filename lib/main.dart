@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:groove_it/login.dart';
+import 'package:groove_it/groove_it.dart';
 import 'package:groove_it/providers/login_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'Groove It',
       // theme:
       //     ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.green)),
-      home: Login(),
+      home: Groove_It(),
     );
   }
 }

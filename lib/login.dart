@@ -8,7 +8,7 @@ class Login extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Guess the word!',
+            'Login',
           ),
         ),
         body: Padding(
