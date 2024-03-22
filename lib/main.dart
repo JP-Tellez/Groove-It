@@ -4,6 +4,7 @@ import 'package:groove_it/login.dart';
 import 'package:groove_it/groove_it.dart';
 import 'package:groove_it/providers/login_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:groove_it/profile.dart';
 
 void main() {
   runApp(
