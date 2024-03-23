@@ -58,10 +58,12 @@ class Login extends StatelessWidget {
             ),
             color: Colors.deepPurple,
           ),
+          ElevatedButton(onPressed: () {}, child: Text("Log In")),
           MaterialButton(
             onPressed: () {},
             child: Text("Sign Up"),
           ),
+          TextButton(onPressed: () {}, child: Text("Sign Up")),
         ],
       ),
     ));

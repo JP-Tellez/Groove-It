@@ -49,22 +49,18 @@ class DetailSong extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.share),
-                    Text("Share"),
-                  ],
-                ),
-              ),
-              ListTile(
-                title: Text(
-                  "Share",
-                ),
-                leading: Icon(Icons.share),
-                onTap: () {},
-              )
+              TextButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.share),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text("Share"),
+                    ],
+                  ))
             ],
           ),
         ));
