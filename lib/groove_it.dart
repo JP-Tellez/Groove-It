@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_acrcloud/flutter_acrcloud.dart';
 
-class Groove_It extends StatelessWidget {
-  Groove_It({super.key});
+class MyApp extends StatefulWidget {
+  @override
+  Groove_It createState() => Groove_It();
+}
+
+class Groove_It extends State<MyApp> {
+  ACRCloudResponseMusicItem? music;
+  @override
+  void initState() {
+    super.initState();
+    ACRCloud.setUp(ACRCloudConfig(
+        "7335e78fed37c3b3bce7131e11f10937",
+        "two6B9YVKBoskQDSiPUxWAWs9OpJLsCCkJ8S2ITL",
+        "identify-us-west-2.acrcloud.com"));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Center(
-              child: Text(
-                'Find a Song',
-              ),
+            title: Text(
+              'Find a Song',
             ),
             leading: Icon(Icons.person),
             actions: [
@@ -19,7 +31,54 @@ class Groove_It extends StatelessWidget {
                 icon: Icon(
                   Icons.menu,
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  setState(() {
+                    music = null;
+                  });
+
+                  final session = ACRCloud.startSession();
+
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => AlertDialog(
+                      title: Text('Listening...'),
+                      content: StreamBuilder(
+                        stream: session.volumeStream,
+                        initialData: 0,
+                        builder: (_, snapshot) =>
+                            Text(snapshot.data.toString()),
+                      ),
+                      actions: [
+                        TextButton(
+                          child: Text('Cancel'),
+                          onPressed: session.cancel,
+                        )
+                      ],
+                    ),
+                  );
+
+                  final result = await session.result;
+                  Navigator.pop(context);
+
+                  if (result == null) {
+                    // Cancelled.
+                    return;
+                  } else if (result.metadata == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('No result.'),
+                    ));
+                    return;
+                  } else {
+                    setState(() {
+                      music = result.metadata!.music.first;
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('Track: ${music!.title}\n'
+                          "Artist: ${music!.artists.first.name}"),
+                    ));
+                  }
+                },
               ),
             ]),
         body: Padding(
