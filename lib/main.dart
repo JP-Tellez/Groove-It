@@ -1,32 +1,56 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:groove_it/detail_song.dart';
-import 'package:groove_it/history.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:groove_it/login.dart';
-import 'package:groove_it/groove_it.dart';
-import 'package:groove_it/providers/login_provider.dart';
-import 'package:groove_it/saved.dart';
-import 'package:provider/provider.dart';
-import 'package:groove_it/profile.dart';
 
-void main() {
+import 'auth/bloc/auth_bloc.dart';
+import 'firebase_options.dart';
+import 'login/login_page.dart';
+
+void main() async {
+  // initialize Firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
-    ChangeNotifierProvider<LoginProvider>(
-      create: (context) => LoginProvider(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthBloc()..add(VerifyAuthEvent()),
+        ),
+      ],
       child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Groove It',
-      // theme:
-      //     ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.green)),
-      home: Login(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.purple,
+        ),
+      ),
+      home: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthErrorState) {
+            print("Error al autenticar");
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthSuccessState) {
+            return LoginPage();
+          } else if (state is UnAuthState ||
+              state is AuthErrorState ||
+              state is SignOutSuccessState) {
+            return LoginPage();
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }
