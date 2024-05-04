@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:groove_it/login.dart';
+import 'package:groove_it/groove_it.dart';
+import 'package:groove_it/music/music_provider.dart';
+import 'package:groove_it/profile.dart';
+import 'package:provider/provider.dart';
 
 import 'auth/bloc/auth_bloc.dart';
 import 'firebase_options.dart';
@@ -19,6 +22,7 @@ void main() async {
         BlocProvider(
           create: (context) => AuthBloc()..add(VerifyAuthEvent()),
         ),
+        Provider(create: (context) => MusicProvider())
       ],
       child: MyApp(),
     ),
@@ -42,7 +46,7 @@ class MyApp extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is AuthSuccessState) {
-            return LoginPage();
+            return Groove_It();
           } else if (state is UnAuthState ||
               state is AuthErrorState ||
               state is SignOutSuccessState) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:groove_it/music/music_provider.dart';
 
 class Profile extends StatelessWidget {
   Profile({super.key});
@@ -18,7 +20,9 @@ class Profile extends StatelessWidget {
               icon: Icon(
                 Icons.cancel,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ]),
       body: Padding(
@@ -35,7 +39,7 @@ class Profile extends StatelessWidget {
               textAlign: TextAlign.start,
             ),
             Text(
-              "e-mail",
+              "ID: " + context.watch<MusicProvider>().userId,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20),
             ),

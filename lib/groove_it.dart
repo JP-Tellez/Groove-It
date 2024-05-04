@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_acrcloud/flutter_acrcloud.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:groove_it/music/music_provider.dart';
+import 'package:groove_it/profile.dart';
 
 class Groove_It extends StatefulWidget {
   @override
@@ -22,12 +23,22 @@ class Groove_It_S extends State<Groove_It> {
 
   @override
   Widget build(BuildContext context) {
+    ACRCloud.setUp(ACRCloudConfig(
+        "7335e78fed37c3b3bce7131e11f10937",
+        "two6B9YVKBoskQDSiPUxWAWs9OpJLsCCkJ8S2ITL",
+        "identify-us-west-2.acrcloud.com"));
     return Scaffold(
         appBar: AppBar(
             title: Text(
               'Find a Song',
             ),
-            leading: Icon(Icons.person),
+            leading: IconButton(
+              icon: Icon(Icons.person),
+              onPressed: () => {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Profile()))
+              },
+            ),
             actions: [
               IconButton(
                 icon: Icon(
@@ -62,7 +73,8 @@ class Groove_It_S extends State<Groove_It> {
                     context: context,
                     barrierDismissible: false,
                     builder: (context) => AlertDialog(
-                      title: Text('Listening...'),
+                      title: Text(
+                          "Hold on! We're listening... \nCurrent stream volume:"),
                       content: StreamBuilder(
                         stream: session.volumeStream,
                         initialData: 0,
@@ -80,7 +92,7 @@ class Groove_It_S extends State<Groove_It> {
 
                   final result = await session.result;
                   Navigator.pop(context);
-
+                  print(result?.metadata);
                   if (result == null) {
                     // Cancelled.
                     return;

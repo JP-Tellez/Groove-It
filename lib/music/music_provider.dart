@@ -9,7 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MusicProvider with ChangeNotifier {
   String userId = FirebaseAuth.instance.currentUser!.uid;
+  get getUserId => userId;
 
+  //Triggers adding a song to Firestore,
+  //will decide if a new register needs to be created, or will update an existing one
   Future<bool> addSongToHistory(ACRCloudResponseMusicItem music) async {
     var success = true;
     var doc = await FirebaseFirestore.instance
@@ -25,20 +28,23 @@ class MusicProvider with ChangeNotifier {
     return success;
   }
 
+  //Creates a new register/doc in firestore, using the userID as the doc ID for easy access
   Future<bool> createNewMusicEntry(ACRCloudResponseMusicItem music) async {
     Map<String, dynamic> item = {};
     Map<String, dynamic> song = {
+      //Defines song map from music elem
       "artist": music.title,
       "song": music.artists.first.name,
       "album": music.album.name,
       "time": Timestamp.now().toString()
     };
     item = {
+      //Defines doc to be posted
       "id": userId,
       "music": [song],
     };
     try {
-      await FirebaseFirestore.instance
+      await FirebaseFirestore.instance //posts doc
           .collection("history")
           .doc(userId)
           .set(item);
@@ -51,8 +57,10 @@ class MusicProvider with ChangeNotifier {
     }
   }
 
+  //Updates history array of logged user, keeping previous records
   Future<bool> updateMusicEntry(ACRCloudResponseMusicItem music) async {
     Map<String, dynamic> song = {
+      //Defines song map from music elem
       "artist": music.title,
       "song": music.artists.first.name,
       "album": music.album.name,
@@ -60,7 +68,7 @@ class MusicProvider with ChangeNotifier {
     };
 
     try {
-      await FirebaseFirestore.instance
+      await FirebaseFirestore.instance //Updates music array with new song
           .collection("history")
           .doc(userId)
           .update({
