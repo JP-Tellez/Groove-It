@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 //import 'package:flutter/widgets.dart';
 import 'package:flutter_acrcloud/flutter_acrcloud.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:groove_it/music/music_provider.dart';
 
 class Groove_It extends StatefulWidget {
   @override
@@ -95,6 +97,7 @@ class Groove_It_S extends State<Groove_It> {
                       content: Text('Track: ${music!.title}\n'
                           "Artist: ${music!.artists.first.name}"),
                     ));
+                    context.read<MusicProvider>().addSongToHistory(music!);
                   }
                 },
                 elevation: 2.0,
