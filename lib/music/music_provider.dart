@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MusicProvider with ChangeNotifier {
   String userId = FirebaseAuth.instance.currentUser!.uid;
-  get getUserId => userId;
+  String get getUserId => userId;
 
   //Triggers adding a song to Firestore,
   //will decide if a new register needs to be created, or will update an existing one

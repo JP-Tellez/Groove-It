@@ -39,7 +39,7 @@ class Profile extends StatelessWidget {
               textAlign: TextAlign.start,
             ),
             Text(
-              "ID: " + context.watch<MusicProvider>().userId,
+              "ID: " + context.watch<MusicProvider>().getUserId,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20),
             ),

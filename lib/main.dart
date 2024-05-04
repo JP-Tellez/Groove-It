@@ -12,6 +12,7 @@ import 'login/login_page.dart';
 
 void main() async {
   // initialize Firebase
+  Provider.debugCheckInvalidValueType = null;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
