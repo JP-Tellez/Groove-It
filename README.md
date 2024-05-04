@@ -1,6 +1,6 @@
-# groove_it
+# Groove_It
 
-A new Flutter project.
+A new shazam-like Flutter project. Allows you to look up what song is playing right now. Keeps up register of played songs.
 
 ## Getting Started
 
