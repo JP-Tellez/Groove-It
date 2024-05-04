@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 //import 'package:flutter/widgets.dart';
 import 'package:flutter_acrcloud/flutter_acrcloud.dart';
 
-class MyApp extends StatefulWidget {
+class Groove_It extends StatefulWidget {
   @override
-  Groove_It createState() => Groove_It();
+  Groove_It_S createState() => Groove_It_S();
 }
 
-class Groove_It extends State<MyApp> {
+class Groove_It_S extends State<Groove_It> {
   ACRCloudResponseMusicItem? music;
   @override
   void initState() {
@@ -31,6 +31,24 @@ class Groove_It extends State<MyApp> {
                 icon: Icon(
                   Icons.menu,
                 ),
+                onPressed: () {},
+              ),
+            ]),
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.search),
+                      label: Text("Search")),
+                ),
+              ),
+              SizedBox(height: 72),
+              RawMaterialButton(
                 onPressed: () async {
                   setState(() {
                     music = null;
@@ -79,24 +97,6 @@ class Groove_It extends State<MyApp> {
                     ));
                   }
                 },
-              ),
-            ]),
-        body: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.search),
-                      label: Text("Search")),
-                ),
-              ),
-              SizedBox(height: 72),
-              RawMaterialButton(
-                onPressed: () {},
                 elevation: 2.0,
                 fillColor: Colors.white,
                 child: Icon(
