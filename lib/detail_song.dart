@@ -12,7 +12,7 @@ class DetailSong extends StatelessWidget {
             //     'Details',
             //   ),
             // ),
-            leading: Icon(Icons.person),
+            //leading: Icon(Icons.person),
             actions: [
               IconButton(
                 icon: Icon(
