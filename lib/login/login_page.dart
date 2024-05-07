@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 225, 208, 255),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: ListView(
@@ -25,28 +26,33 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(48.0),
-              child: Text(
-                "GROOVE IT",
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
+              child: Center(
+                child: Text(
+                  "GROOVE-IT",
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 200),
+            SizedBox(height: 50),
             MaterialButton(
-              child: Text("Iniciar como anonimo"),
-              color: Colors.grey,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text("Continue as Guest"),
+              color: Colors.white,
               onPressed: () {
                 BlocProvider.of<AuthBloc>(context).add(AnonymousAuthEvent());
               },
             ),
-            Text(
-              "Utiliza un red social",
-            ),
             MaterialButton(
-              child: Text("Iniciar con Google"),
-              color: Colors.green,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text("Sign in with Google"),
+              color: Colors.white,
               onPressed: () {
                 BlocProvider.of<AuthBloc>(context).add(GoogleAuthEvent());
               },
