@@ -8,20 +8,22 @@ class Saved extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            // title: Center(
-            //   child: Text(
-            //     'Recent',
-            //   ),
-            // ),
-            leading: Icon(Icons.person),
-            actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.menu,
-                ),
-                onPressed: () {},
+          // title: Center(
+          //   child: Text(
+          //     'Recent',
+          //   ),
+          // ),
+          //leading: Icon(Icons.person),
+
+          actions: [
+            IconButton(
+              icon: Icon(
+                Icons.menu,
               ),
-            ]),
+              onPressed: () {},
+            ),
+          ],
+        ),
         body: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
