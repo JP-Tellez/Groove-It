@@ -13,7 +13,7 @@ class History extends StatelessWidget {
                 'Recent',
               ),
             ),
-            leading: Icon(Icons.person),
+            //leading: Icon(Icons.person),
             actions: [
               IconButton(
                 icon: Icon(
