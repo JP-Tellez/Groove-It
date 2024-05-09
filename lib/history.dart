@@ -1,11 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:cloud_notes_app/content/item_public.dart';
-import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
+// import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:groove_it/detail_song.dart';
-import 'package:groove_it/music/history_provider.dart';
+// import 'package:groove_it/music/history_provider.dart';
 import 'package:groove_it/music/music_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';

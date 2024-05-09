@@ -52,7 +52,7 @@ class DetailSong extends StatelessWidget {
                       ),
                     ),
                     Image.network(
-                      "https://i.scdn.co/image/ab67616d00001e02d855018e0263ff72f4f209b8",
+                      imageURL,
                       height: 300,
                     ),
                     SizedBox(
