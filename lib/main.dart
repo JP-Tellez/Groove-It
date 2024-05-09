@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:groove_it/groove_it.dart';
 import 'package:groove_it/music/music_provider.dart';
-import 'package:groove_it/profile.dart';
 import 'package:provider/provider.dart';
 
 import 'auth/bloc/auth_bloc.dart';
@@ -11,9 +10,9 @@ import 'firebase_options.dart';
 import 'login/login_page.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   // initialize Firebase
   Provider.debugCheckInvalidValueType = null;
-  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
