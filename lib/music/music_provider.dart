@@ -20,6 +20,21 @@ class MusicProvider with ChangeNotifier {
 
   String _resAsString = '';
 
+  List<dynamic> _musicList = [];
+  List<dynamic> get getmusicList => _musicList;
+
+  Future<void> getDocument() async {
+    final docRef = instance.collection("history").doc(userId);
+    final docSnapshot = await docRef.get();
+
+    if (docSnapshot.exists) {
+      final data = docSnapshot.data()!;
+
+      _musicList = data['music'];
+      notifyListeners();
+    }
+  }
+
   Future<bool> RecordAudio() async {
     final record = AudioRecorder();
 

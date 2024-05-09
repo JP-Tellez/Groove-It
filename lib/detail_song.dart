@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailSong extends StatelessWidget {
-  DetailSong({super.key});
+  final String album;
+  final String artist;
+  final String imageURL;
+  final String song;
+  final String spotiURL;
+
+  DetailSong({
+    super.key,
+    required this.album,
+    required this.artist,
+    required this.imageURL,
+    required this.song,
+    required this.spotiURL,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,33 +37,52 @@ class DetailSong extends StatelessWidget {
               ),
             ]),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(16.0),
           child: Column(
             children: [
-              Text(
-                "Song Name",
-                style: TextStyle(fontSize: 25),
-                textAlign: TextAlign.start,
-              ),
-              Image.network(
-                  'https://i.scdn.co/image/ab67616d00001e0249d694203245f241a1bcaa72'),
-              Text(
-                "Album",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20),
-              ),
               Expanded(
-                child: ListView(
+                child: Column(
                   children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 30),
+                      child: Text(
+                        song,
+                        style: TextStyle(fontSize: 45),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Image.network(
+                      "https://i.scdn.co/image/ab67616d00001e02d855018e0263ff72f4f209b8",
+                      height: 300,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
                     Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                      artist,
                       textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      "Album: $album",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 25),
                     ),
                   ],
                 ),
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    Uri url = Uri.parse(spotiURL);
+                    if (!await launchUrl(url,
+                        mode: LaunchMode.externalApplication)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Could not launch ${url}')));
+                    }
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -56,7 +90,7 @@ class DetailSong extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Text("Share"),
+                      Text("Open in Spotify"),
                     ],
                   ))
             ],

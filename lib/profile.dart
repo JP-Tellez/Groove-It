@@ -58,12 +58,12 @@ class Profile extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      // Agregar aquí la función que deseas ejecutar cuando se toca el texto "Personal information"
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => DetailSong(),
-                        ),
-                      );
+                      // // Agregar aquí la función que deseas ejecutar cuando se toca el texto "Personal information"
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (_) => DetailSong(),
+                      //   ),
+                      // );
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 20),

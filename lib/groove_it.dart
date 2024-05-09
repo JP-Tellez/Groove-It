@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 //import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:groove_it/detail_song.dart';
 import 'package:groove_it/music/music_provider.dart';
 import 'package:groove_it/profile.dart';
 
@@ -95,6 +96,15 @@ class Groove_It_S extends State<Groove_It> {
                           "Artist: ${song["result"]['artist']}\n"
                           'Album: ${song["result"]['album']}'),
                     ));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DetailSong(
+                            album: song["result"]["title"],
+                            artist: song["result"]["artist"],
+                            imageURL: song["result"]["spotify"]["album"]
+                                ["images"][1]["url"],
+                            song: song["result"]["title"],
+                            spotiURL: song["result"]["spotify"]["external_urls"]
+                                ["spotify"])));
                     return;
                   }
                 },
