@@ -1,4 +1,5 @@
 import 'dart:convert';
+// import 'dart:ffi';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -167,12 +168,25 @@ class MusicProvider with ChangeNotifier {
       "spotiURL": music["spotify"]["external_urls"]["spotify"]
     };
     try {
-      //Updates music array with new song
-      instance.collection("history").doc(userId).update({
-        "music": FieldValue.arrayUnion([newItem])
-      });
-      notifyListeners();
-      return true;
+      var doc = instance.collection("history").doc(userId);
+      final docSnapshot = await doc.get();
+
+      if (docSnapshot.exists) {
+        List<dynamic> listMusic = docSnapshot.data()!["music"];
+        // print(
+        //     "AAAAAAAAAAAAAAAAAAAAAAAAAAAALENGTH${listMusic.length}${listMusic[listMusic.length - 1]}AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ");
+        if (listMusic.length >= 15) {
+          listMusic.removeAt(0);
+        }
+        listMusic.add(newItem);
+        // print(
+        //     "AAAAAAAAAAAAAAAAAAAAAAAAAAAALENGTH${listMusic.length}${listMusic[listMusic.length - 1]}AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ");
+        instance.collection("history").doc(userId).update({"music": listMusic});
+        notifyListeners();
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       print("Error: ${e.toString()}");
       _song = {};
