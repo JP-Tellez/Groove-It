@@ -112,7 +112,9 @@ class MusicProvider with ChangeNotifier {
       "artist": music["artist"],
       "song": music["title"],
       "album": music["album"],
-      "time": Timestamp.now().toDate().toString()
+      "time": Timestamp.now().toDate().toString(),
+      "imageURL": music["spotify"]["album"]["images"][1]["url"],
+      "spotiURL": music["spotify"]["external_urls"]["spotify"]
     };
     item = {
       //Defines doc to be posted
@@ -145,7 +147,9 @@ class MusicProvider with ChangeNotifier {
       "artist": music["artist"],
       "song": music["title"],
       "album": music["album"],
-      "time": Timestamp.now().toString()
+      "time": Timestamp.now().toString(),
+      "imageURL": music["spotify"]["album"]["images"][1]["url"],
+      "spotiURL": music["spotify"]["external_urls"]["spotify"]
     };
     try {
       //Updates music array with new song

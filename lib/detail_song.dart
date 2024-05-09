@@ -30,12 +30,10 @@ class DetailSong extends StatelessWidget {
                 style: TextStyle(fontSize: 25),
                 textAlign: TextAlign.start,
               ),
-              Icon(
-                Icons.photo,
-                size: 300,
-              ),
+              Image.network(
+                  'https://i.scdn.co/image/ab67616d00001e0249d694203245f241a1bcaa72'),
               Text(
-                "Lyrics",
+                "Album",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20),
               ),
