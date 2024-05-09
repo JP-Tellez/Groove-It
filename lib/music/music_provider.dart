@@ -66,8 +66,8 @@ class MusicProvider with ChangeNotifier {
     if (_song['result'] == '')
       return (false, _song);
     else
-      return (true, _song);
-    addSongToHistory();
+      addSongToHistory();
+    return (true, _song);
   }
 
   Future<String> fetchSong(String base64) async {
