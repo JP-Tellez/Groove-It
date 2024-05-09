@@ -60,6 +60,7 @@ class MusicProvider with ChangeNotifier {
     String base64 = await makeBase64();
     String a = await fetchSong(base64);
     // print(base64);
+    a = a;
     // print(a);
     if (_song['result'] == '')
       return (false, _song);
