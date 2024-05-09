@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 //import 'package:flutter/widgets.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter_acrcloud/flutter_acrcloud.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:groove_it/music/music_provider.dart';
@@ -11,22 +14,16 @@ class Groove_It extends StatefulWidget {
 }
 
 class Groove_It_S extends State<Groove_It> {
-  ACRCloudResponseMusicItem? music;
+  Map<String, dynamic> music = {};
+
   @override
   void initState() {
     super.initState();
-    ACRCloud.setUp(ACRCloudConfig(
-        "7335e78fed37c3b3bce7131e11f10937",
-        "two6B9YVKBoskQDSiPUxWAWs9OpJLsCCkJ8S2ITL",
-        "identify-us-west-2.acrcloud.com"));
   }
 
   @override
   Widget build(BuildContext context) {
-    ACRCloud.setUp(ACRCloudConfig(
-        "7335e78fed37c3b3bce7131e11f10937",
-        "two6B9YVKBoskQDSiPUxWAWs9OpJLsCCkJ8S2ITL",
-        "identify-us-west-2.acrcloud.com"));
+    //Map<String, dynamic> song = context.watch<MusicProvider>().song;
     return Scaffold(
         appBar: AppBar(
             title: Text(
@@ -63,54 +60,45 @@ class Groove_It_S extends State<Groove_It> {
               SizedBox(height: 72),
               RawMaterialButton(
                 onPressed: () async {
-                  setState(() {
-                    music = null;
-                  });
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => AlertDialog(
+                      title: Text("Hold on! We're listening..."),
+                    ),
+                  );
+                  bool success;
+                  success = await context.read<MusicProvider>().RecordAudio();
+                  Navigator.pop(context);
 
-                  final session = ACRCloud.startSession();
+                  if (success == false) return;
 
                   showDialog(
                     context: context,
                     barrierDismissible: false,
                     builder: (context) => AlertDialog(
-                      title: Text(
-                          "Hold on! We're listening... \nCurrent stream volume:"),
-                      content: StreamBuilder(
-                        stream: session.volumeStream,
-                        initialData: 0,
-                        builder: (_, snapshot) =>
-                            Text(snapshot.data.toString()),
-                      ),
-                      actions: [
-                        TextButton(
-                          child: Text('Cancel'),
-                          onPressed: session.cancel,
-                        )
-                      ],
+                      title: Text("We're fetching that song for you..."),
                     ),
                   );
-
-                  final result = await session.result;
+                  Map<String, dynamic> song;
+                  (success, song) =
+                      await context.read<MusicProvider>().songManager();
                   Navigator.pop(context);
-                  print(result?.metadata);
-                  if (result == null) {
-                    // Cancelled.
-                    return;
-                  } else if (result.metadata == null) {
+                  print(song);
+                  if (success == false) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text('No result.'),
                     ));
                     return;
                   } else {
-                    setState(() {
-                      music = result.metadata!.music.first;
-                    });
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text('Track: ${music!.title}\n'
-                          "Artist: ${music!.artists.first.name}"),
+                      content: Text('Track: ${song["song"]}\n'
+                          "Artist: ${song['artist']}\n"
+                          'Album: ${song['album']}'),
                     ));
-                    context.read<MusicProvider>().addSongToHistory(music!);
+                    context.read<MusicProvider>().addSongToHistory();
                   }
+                  return;
                 },
                 elevation: 2.0,
                 fillColor: Colors.white,
