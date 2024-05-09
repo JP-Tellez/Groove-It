@@ -84,7 +84,10 @@ class Groove_It_S extends State<Groove_It> {
                   (success, song) =
                       await context.read<MusicProvider>().songManager();
                   Navigator.pop(context);
+                  print(
+                      'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
                   print(song);
+                  if (song["result"] == null) success = false;
                   if (success == false) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text('No result.'),
@@ -92,13 +95,12 @@ class Groove_It_S extends State<Groove_It> {
                     return;
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text('Track: ${song["song"]}\n'
-                          "Artist: ${song['artist']}\n"
-                          'Album: ${song['album']}'),
+                      content: Text('Track: ${song["result"]["title"]}\n'
+                          "Artist: ${song["result"]['artist']}\n"
+                          'Album: ${song["result"]['album']}'),
                     ));
-                    context.read<MusicProvider>().addSongToHistory();
+                    return;
                   }
-                  return;
                 },
                 elevation: 2.0,
                 fillColor: Colors.white,
