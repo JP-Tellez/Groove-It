@@ -1,15 +1,9 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:cloud_notes_app/content/item_public.dart';
-// import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:groove_it/detail_song.dart';
-// import 'package:groove_it/music/history_provider.dart';
 import 'package:groove_it/music/music_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-//import 'package:flutter/widgets.dart';
 
 class History extends StatefulWidget {
   @override
@@ -31,24 +25,29 @@ class _HistoryState extends State<History> {
     context.watch<MusicProvider>().getDocument();
     return Scaffold(
       appBar: AppBar(
-          title: Center(
-            child: Text(
-              'Recent',
-            ),
+          // title: Center(
+          //   child: Text(
+          //     'Recent',
+          //   ),
+          // ),
+          // //leading: Icon(Icons.person),
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(
+          //       Icons.menu,
+          //     ),
+          //     onPressed: () {},
+          //   ),
+          // ]
           ),
-          //leading: Icon(Icons.person),
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.menu,
-              ),
-              onPressed: () {},
-            ),
-          ]),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
+            Text(
+              "Recent",
+              style: TextStyle(fontSize: 50),
+            ),
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,

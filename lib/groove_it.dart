@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 //import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:groove_it/detail_song.dart';
@@ -55,79 +56,81 @@ class Groove_It_S extends State<Groove_It> {
                 ),
               ),
               SizedBox(height: 72),
-              RawMaterialButton(
-                onPressed: () async {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) => AlertDialog(
-                      title: Text("Hold on! We're listening..."),
-                    ),
-                  );
-                  bool success;
-                  success = await context.read<MusicProvider>().RecordAudio();
-                  Navigator.pop(context);
+              Expanded(
+                child: RawMaterialButton(
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => AlertDialog(
+                        title: Text("Hold on! We're listening..."),
+                      ),
+                    );
+                    bool success;
+                    success = await context.read<MusicProvider>().RecordAudio();
+                    Navigator.pop(context);
 
-                  if (success == false) return;
+                    if (success == false) return;
 
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) => AlertDialog(
-                      title: Text("We're fetching that song for you..."),
-                    ),
-                  );
-                  Map<String, dynamic> song;
-                  (success, song) =
-                      await context.read<MusicProvider>().songManager();
-                  Navigator.pop(context);
-                  print(
-                      'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-                  print(song);
-                  if (song["result"] == null) success = false;
-                  if (success == false) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text('No result.'),
-                    ));
-                    return;
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text('Track: ${song["result"]["title"]}\n'
-                          "Artist: ${song["result"]['artist']}\n"
-                          'Album: ${song["result"]['album']}'),
-                    ));
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => DetailSong(
-                            album: song["result"]["title"],
-                            artist: song["result"]["artist"],
-                            imageURL: song["result"]["spotify"]["album"]
-                                ["images"][1]["url"],
-                            song: song["result"]["title"],
-                            spotiURL: song["result"]["spotify"]["external_urls"]
-                                ["spotify"])));
-                    return;
-                  }
-                },
-                elevation: 2.0,
-                fillColor: Colors.white,
-                child: Icon(
-                  Icons.play_arrow_outlined,
-                  size: 88.0,
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => AlertDialog(
+                        title: Text("We're fetching that song for you..."),
+                      ),
+                    );
+                    Map<String, dynamic> song;
+                    (success, song) =
+                        await context.read<MusicProvider>().songManager();
+                    Navigator.pop(context);
+                    print(
+                        'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+                    print(song);
+                    if (song["result"] == null) success = false;
+                    if (success == false) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('No result.'),
+                      ));
+                      return;
+                    } else {
+                      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      //   content: Text('Track: ${song["result"]["title"]}\n'
+                      //       "Artist: ${song["result"]['artist']}\n"
+                      //       'Album: ${song["result"]['album']}'),
+                      // ));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DetailSong(
+                              album: song["result"]["title"],
+                              artist: song["result"]["artist"],
+                              imageURL: song["result"]["spotify"]["album"]
+                                  ["images"][1]["url"],
+                              song: song["result"]["title"],
+                              spotiURL: song["result"]["spotify"]
+                                  ["external_urls"]["spotify"])));
+                      return;
+                    }
+                  },
+                  elevation: 3.0,
+                  fillColor: Colors.white,
+                  child: Icon(
+                    Icons.play_arrow_outlined,
+                    size: 88.0,
+                  ),
+                  padding: EdgeInsets.all(15.0),
+                  shape: CircleBorder(),
                 ),
-                padding: EdgeInsets.all(15.0),
-                shape: CircleBorder(),
               ),
               SizedBox(height: 72),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Recent",
-                    style: TextStyle(fontSize: 36),
-                  )
-                ],
-              ),
-              Expanded(child: Recent())
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Text(
+              //       "Recent",
+              //       style: TextStyle(fontSize: 36),
+              //     )
+              //   ],
+              // ),
+              // Expanded(child: Recent())
             ],
           ),
         ));

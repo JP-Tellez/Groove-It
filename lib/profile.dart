@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:groove_it/detail_song.dart';
+// import 'package:groove_it/detail_song.dart';
 import 'package:groove_it/history.dart';
 import 'package:groove_it/music/music_provider.dart';
 import 'package:groove_it/saved.dart';
@@ -18,33 +19,50 @@ class Profile extends StatelessWidget {
           //   ),
           // ),
 
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.cancel,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ]),
+          // actions: [
+          //   IconButton(
+          //     icon: Icon(
+          //       Icons.cancel,
+          //     ),
+          //     onPressed: () {
+          //       Navigator.pop(context);
+          //     },
+          //   ),
+          // ]
+          ),
       body: Padding(
         padding: const EdgeInsets.all(0.0),
         child: Column(
           children: [
-            Icon(
-              Icons.account_circle,
-              size: 100,
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "Groove It",
+                style: TextStyle(fontSize: 50),
+              ),
+            ),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Image.network(
+                  "${context.watch<MusicProvider>().getPhotoURL}",
+                )),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "${context.watch<MusicProvider>().getName}",
+                style: TextStyle(fontSize: 35),
+                textAlign: TextAlign.start,
+              ),
             ),
             Text(
-              "[Name]",
-              style: TextStyle(fontSize: 25),
-              textAlign: TextAlign.start,
-            ),
-            Text(
-              "ID: " + context.watch<MusicProvider>().getUserId,
+              "${context.watch<MusicProvider>().getEmail}",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 25),
+            ),
+            Text(
+              "${context.watch<MusicProvider>().getPhone}",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 25),
             ),
             SizedBox(height: 25),
             Container(

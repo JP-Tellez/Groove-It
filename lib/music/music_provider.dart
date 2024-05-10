@@ -24,16 +24,31 @@ class MusicProvider with ChangeNotifier {
   List<dynamic> _musicList = [];
   List<dynamic> get getmusicList => _musicList;
 
-  Future<void> getDocument() async {
+  String? _email = FirebaseAuth.instance.currentUser!.email;
+  String? get getEmail => _email;
+
+  String? _name = FirebaseAuth.instance.currentUser!.displayName;
+  String? get getName => _name;
+
+  String? _photoUrl = FirebaseAuth.instance.currentUser!.photoURL;
+  String? get getPhotoURL => _photoUrl;
+
+  String? _phone = FirebaseAuth.instance.currentUser!.phoneNumber;
+  String? get getPhone => _phone;
+
+  Future<List<dynamic>> getDocument() async {
     final docRef = instance.collection("history").doc(userId);
     final docSnapshot = await docRef.get();
+    List<dynamic> elHistorial = [];
 
     if (docSnapshot.exists) {
       final data = docSnapshot.data()!;
 
       _musicList = data['music'];
+      elHistorial = data['music'];
       notifyListeners();
     }
+    return elHistorial;
   }
 
   Future<bool> RecordAudio() async {
